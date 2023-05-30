@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>External window page</h1>
+<button id="send-event">Send event back</button>
+<script>
+    (function () {
+        let source;
+        let origin;
+        const sendEventBtn = document.querySelector('#send-event');
+        sendEventBtn.addEventListener('click', () => {
+              window.addEventListener("message", (event) => {
+                if (event.data === "Establish connection for clear history") {
+                    source = event.source;
+                    origin = event.origin;
+                }
+            });
+            if (source && origin) {
+                source.postMessage("do_clear_history", origin);
+            }
+        });
+    })();
+</script>
+</body>
+</html>
